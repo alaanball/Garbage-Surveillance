@@ -1,0 +1,45 @@
+Lidar-based Teach-and-Repeat of Mobile Robot Trajectories
+
+Abstract:
+
+Many robots still use landmarks/markers for navigation
+Recent years - only a globally consistent metric map
+Not using markers allows more flexible route planning
+
+User taught trajectories represented by anchor points - raw odometry and 2d laser data (no camera)
+Scan matching to estimate the offset of the robot position from anchor points
+Algorithm calculates error in the configuration space, which is then used in feedback
+
+Related work:
+Model based approaches - rely on map of environment
+appearance based - works in the space of sensor data
+This paper - appearance based
+
+Methodology
+
+During the teach phase, laser scans of the environment are taken every time the robot
+moves a certain distance or rotates by a certain angle. The laser scan contains 2d info
+of the environment
+
+For each laser scan, the location (x, y) coordinates are also stored. These form the path to be traced
+These coordinates are obtained by measuring velocity during the path and integrating it with time. 
+A laser scan and its corresponding position is called an anchor point. 
+
+During the repeat phase, the error at each time step needs to be known. For this, the current position must be estimated
+Estimating it as above just from the velocity can lead to drift and is known as dead reckoning.
+The next anchor point is found by keeping track of offsets between anchors and by knowing the offset from the current anchor
+The offset from this anchor point and the current position is found by matching the current laser scan to the laser scan of the anchor point
+Next, the offset between this anchor point and the position coordinate at this time in the STORED path is calculated
+Now by adding these two offsets, the error between the actual position and the ideal position is found. This error is applied to a feedback controller 
+
+v = v* - ke. where v is the actual velocity and v* is the stored velocity
+e is the error and k is a gain matrix
+as v - v* is the time derivative of e, by choosing k to have positive eigenvalues, e can be reduced to 0
+
+
+Other observations
+
+The anchor point density doesn't influence the result too much
+This method of laser scan matching is more accurate than pure encoder based odometry and monte carlo localization
+
+ 
