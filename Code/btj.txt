@@ -1,0 +1,67 @@
+// Arduino Code for the bluetooth remote controller
+// Valid as of 14/03/2018
+
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(10, 11); // RX, TX of arduino
+int joyPin1 = 0;                 // slider variable connecetd to analog pin 0
+int joyPin2 = 1;                 // slider variable connecetd to analog pin 1
+int value1 = 0;                  // variable to read the value from the analog pin 0
+int value2 = 0;                  // variable to read the value from the analog pin 1
+
+byte buf[2] = {0};
+int enable = 1;
+
+void setup() {
+  
+  Serial.begin(115200);  
+  mySerial.begin(38400);
+  Serial.println("Initialized");
+}
+
+
+void loop() {
+
+  // reads the value of the variable resistor 
+  value1 = analogRead(joyPin1);   
+  // this small pause is needed between reading
+  // analog pins, otherwise we get the same value twice
+  delay(100);             
+  // reads the value of the variable resistor 
+  value2 = analogRead(joyPin2);   
+  
+  Serial.print(value1);
+  Serial.println(value2);
+
+  // transmit values iff enable is 1
+  if(mySerial.available())
+    enable = mySerial.read();
+
+  if(enable == 1)
+  {
+    //send string
+    //mySerial.print(value1);
+    //mySerial.print(",");
+    //mySerial.println(value2);
+    
+    // this sends the values directly instead of as strings
+    // should be read as short data type in raspberry pi (16 bit)
+    buf[0] = value1 & 255;
+    buf[1] = (value1 >> 8) & 255;
+
+    mySerial.write(buf[0]);
+    mySerial.write(buf[1]);
+
+    buf[0] = value2 & 255;
+    buf[1] = (value2 >> 8) & 255;
+
+    mySerial.write(buf[0]);
+    mySerial.write(buf[1]);
+    delay(900);
+  }
+  else
+  {
+    delay(5000); 
+  }
+    
+}

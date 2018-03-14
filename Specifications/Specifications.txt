@@ -9,8 +9,7 @@ Should
 Technical requirement:
 
 Distance between the two points = 200m
-Assuming it stops every 3m to capture an image of its surroundings and takes 5s to capture and process the image, 
-the time taken to traverse the path = 4.5 min
+Assuming it stops every 3m to capture an image of its surroundings and takes 5s to capture and process the image, the time taken to traverse the path = 4 min
 Or an average speed of approximately 75 cm/s
 
 Robot includes

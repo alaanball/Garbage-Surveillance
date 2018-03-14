@@ -1,0 +1,39 @@
+Computer Vision
+
+https://stackoverflow.com/questions/6241607/distance-to-the-object-using-stereo-camera
+
+Powering Raspberry Pi and Arduino
+
+http://www.instructables.com/id/Powering-Arduino-with-a-Battery/
+https://raspberrypi.stackexchange.com/questions/1617/how-do-i-supply-power-through-the-gpio
+https://www.modmypi.com/blog/how-do-i-power-my-raspberry-pi
+http://www.learningaboutelectronics.com/Articles/How-to-build-a-battery-eliminator.php
+https://raspberrypi.stackexchange.com/questions/7913/powering-a-pi-from-12v
+
+PiGPIO
+
+http://abyz.me.uk/rpi/pigpio/cif.html
+
+Mosquitto
+
+https://mosquitto.org/api/files/mosquitto-h.html
+https://github.com/mqtt/mqtt.github.io/wiki/software?id=software
+https://github.com/mqtt/mqtt.github.io/wiki/public_brokers
+https://www.hivemq.com/blog/how-to-get-started-with-mqtt
+http://www.mqtt-dashboard.com/
+
+Socket Programming
+
+http://osr600doc.xinuos.com/en/SDK_netapi/sockC.interrupt_driven_sockIO.html
+http://www.kegel.com/c10k.html
+
+Bluetooth
+
+https://www.raspberrypi.org/forums/viewtopic.php?p=947185#p947185
+https://www.raspberrypi.org/forums/viewtopic.php?p=1007463#p1007463
+https://www.npmjs.com/package/bluetoothctl
+http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands
+http://www.martyncurrey.com/arduino-with-hc-05-bluetooth-module-at-mode/
+http://www.martyncurrey.com/connecting-2-arduinos-by-bluetooth-using-a-hc-05-and-a-hc-06-easy-method-using-cmode/
+https://www.raspberrypi.org/forums/viewtopic.php?t=152776
+

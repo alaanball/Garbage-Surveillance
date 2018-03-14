@@ -1,0 +1,46 @@
+INTRODUCTION 
+             Visual Teach and Repeat (VT&R) is a technique that can allow a robot to repeat any previously driven route fully autonomously, requiring only an onboard 
+visual sensor. This makes VT&R extremely well suited for a number of tasks where GPS is either not available or unreliable.
+
+     VT&R is a two-phase technique comprised of a teach pass and a repeat pass. During the teach pass, the system uses a visual sensor to construct a map of the environment,
+which can either be represented as metric, topological or a hybrid of the two. During the repeat pass, the system localizes against the archived maps, and in some
+cases also performs relative motion estimation, in order to accurately retrace the previously driven route. Metric map representations are seldom used. Topological map
+representations are far more common and generally store images at the vertices of a graph of topologically-connected places. Hybrid topological/metric maps appear to
+offer the best of both worlds, as they avoid the costly construction of a globally consistent map by representing local maps as nodes in a graph and benefit from accurate 
+metric information for control. 
+
+II. APPEARANCE-BASED LIDAR 
+                           Appearance-based lidar technique, which involves three main steps: (i) image formation, where the raw lidar data are processed
+into a stack of intensity,range images (ii) keypoint generation, to create metric keypoints for motion estimation, and (iii) our back-end 
+estimation framework. .
+ 
+(i) image formation : Due to the fact that most objects in a natural environment are not very reflective, the raw intensity image is extremely dark and requires 
+image processing for use in a feature detector.Here we use a linear range correction (i.e., multiplying the intensity values by their associated range) and rescaling 
+the brightness values into the [0, 255]
+
+(ii) keypoint generation : Using a GPU implementation of the SURF algorithm, keypoint detection in the intensity image, returns a list
+of image locations, yi = [ui vi]. In computer vision, speeded up robust features (SURF) is a patented local feature detector and descriptor. 
+It can be used for tasks such as object recognition, image registration, classification or 3D reconstruction.
+
+(iii) Bundle Adjustment : We use the keypoints generated from our image stack to compute the reprojection error, which is the standard error term in bundle adjustment.
+In each control cycle, the system performs frame-to-frame VO to update its estimate in the map and then matches against the closest keyframe in the map.
+
+
+The teach pass - The taught path is built as a pose graph consisting of relative frame transformations between poses. Vertices in the graph store keyframes
+containing keypoints (e.g., azimuth, elevation, range), SURF descriptors,camera calibration/geometry information, and timestamps. Edges store relative
+frame transformations and lists of inter-frame keypoint matches. New vertices are added to the graph when the robot travels a certain distance or when it rotates
+by a certain amount. Once the taught path is constructed, the path is transformed into the vehicle reference frame using a camera-tovehicle transformation.
+
+The Repeat pass - Images from the current sensor frame, called the leaf, are used for a frame-to-frame VO estimate and then matched against the nearest keyframe from 
+the teach pass, called the branch.
+
+Once the path has been built in the vehicle frame, at each timestep, the system
+performs the following steps for localization.
+1) Frame-to-frame VO - This provides an incremental pose update to achieve a good guess for the next step of localizing against the nearest keyframe.
+2) Localization against the map - The system localizes against the nearest keyframe on the pose graph (nearest in a Euclidean sense), using the keypoint matching
+and outlier rejection methods.
+
+The main purpose of this was to design a method that would enable long-range autonomous retrotraverses for planetary sample and return missions; however,
+there are many other applications for this technique that extend beyond the space domain (e.g., patrolling, underground mining, and convoying). By using lidar as 
+the primary sensor, this system is able to avoid one of the more challenging aspects of visual perception in outdoor environments: dynamic
+lighting conditions, which proved to be a limiting factor.

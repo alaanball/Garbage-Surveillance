@@ -1,0 +1,71 @@
+hc05 module
+
+hardware:
+Vcc to 3.3V pin
+ground to ground
+rx of module - through voltage divider (5V to 3.3V) - to tx of arduino (pin D11)
+(should be any pin other than the tx reserved for serial comm with pc)
+tx of module to rx of arduino (pin D10) (any pin other than rx reserved for serial comm with pc - digital pin 0)
+
+while starting, if WAKEUP pin is high, goes into AT mode
+can configure module in AT mode but it won't be discoverable
+led blinks with 2 sec interval
+type AT+INIT to initialize module
+
+(!!!IMPORTANT!!!)if other devices are to connect to the module, the module must be set as a slave
+type AT+ROLE=0 to set as slave
+
+type AT+CMODE=1 to let any device connect
+type AT+INQ to set the module into inquiry mode
+led now blinks more rapidly - 2times per second
+It now awaits a connection from other devices
+
+In PC/phone search for bluetooth devices
+select HC_MODULE and use the password 1234 to connect
+
+In raspberry pi, click on bluetooth icon > add device > scan for devices > select hc_module > type password
+or type sudo bluetoothctl in terminal
+agent on
+default-agent
+scan on
+pair <address of module>
+trust <address of module>
+(it might say that no services are available - that is ok)
+
+in another terminal type: 
+sudo rfcomm connect hci0 <addr of mdule>
+to connect rfcomm0 to module
+
+in another terminal type
+sudo echo "hello" > /dev/rfcomm0
+to send "hello" to module
+
+Instead of using rfcomm connect, run the C program bt_test (in /home/pi/Testing ) to connect to the module
+
+Useful info
+
+Password: 1234
+name: HC_MODULE
+
+AT+INIT to initialize module
+AT+PAIR:<bluetooth addr in uu(8bits),nn(4bits),ll format(12bits)>,<timeout in sec>
+AT+DISC to disconnect
+AT+STATE to find currect state
+
+if trying to reconnect, disconnect first on both devices
+
+phone bluetooth address: more settings, about phone, scroll to bottom
+
+Useful text:
+FKYZ0UTH... .pdf
+search for it on laptop
+
+Useful links:
+
+https://www.raspberrypi.org/forums/viewtopic.php?p=947185#p947185
+https://www.raspberrypi.org/forums/viewtopic.php?p=1007463#p1007463
+https://www.npmjs.com/package/bluetoothctl
+http://www.raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands
+http://www.martyncurrey.com/arduino-with-hc-05-bluetooth-module-at-mode/
+http://www.martyncurrey.com/connecting-2-arduinos-by-bluetooth-using-a-hc-05-and-a-hc-06-easy-method-using-cmode/
+https://www.raspberrypi.org/forums/viewtopic.php?t=152776

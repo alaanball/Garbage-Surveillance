@@ -1,0 +1,17 @@
+Function headers in mosquitto.h
+https://mosquitto.org/api/files/mosquitto-h.html
+
+build command (windows): 
+gcc .\test1.c -o test1.exe -L"directory containing mosquitto.dll (and mosquitto.lib)" -lmosquitto
+To run
+.\test1.exe
+
+try restarting if it says dll not found (when attempting to run using visual studio) or if the programs runs but doesn't
+do anything or stops during the startup implementation (while using gdb) - this can happen if the required dll files for the
+executable cannot be loaded at startup
+
+In Raspbian:
+Library file is in /usr/sbin   
+use "./test1.out" to run output of gcc 
+
+Note: doesn't seem to receive messages properly if it didn't connect to broker in first attempt

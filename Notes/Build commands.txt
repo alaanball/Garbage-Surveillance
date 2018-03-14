@@ -1,0 +1,15 @@
+Mosquitto (MQTT)
+
+Windows: gcc .\test1.c -o test1.exe -L"directory containing mosquitto.dll and other dlls" -lmosquitto
+Raspbian: gcc .\test1.c -o test1 -L"directory containing mosquitto library" -lmosquitto
+
+Windows directories: C:\Mosquitto\devel and C:\Mosquitto
+Raspbian: /usr/sbin
+
+pigpio
+
+gcc -Wall -pthread -o prog prog.c -lpigpio -lrt
+
+Bluetooth
+
+gcc -Wall prog.c -o prog -lbluetooth
