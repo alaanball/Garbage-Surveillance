@@ -15,4 +15,4 @@ Build commands, useful observations and hyperlinks.
 Presentations given so far (.ppt and .odt files).
 
 ## Specifications
-Text file of specifications and a Matlab/Octave program to calculate the specifications.
+Text file of specifications and a MATLAB/Octave program to calculate the specifications.
