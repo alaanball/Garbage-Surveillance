@@ -57,7 +57,7 @@ void loop() {
 
     mySerial.write(buf[0]);
     mySerial.write(buf[1]);
-    delay(900);
+    delay(400);
   }
   else
   {

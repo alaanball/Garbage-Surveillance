@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 				}
 			}
 		}		
-		sleep(1);
+		sleep(0.5);
 	}
 	
 	// stop motors
